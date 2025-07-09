@@ -1,0 +1,30 @@
+name: Build Cerberus Scanner
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x64
+
+    - name: Build executable
+      run: |
+        g++ -std=c++17 -static *.cpp -o cerberus.exe
+        dir
+
+    - name: Upload compiled EXE
+      uses: actions/upload-artifact@v3
+      with:
+        name: cerberus-exe
+        path: cerberus.exe
