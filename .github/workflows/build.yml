@@ -13,18 +13,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install MinGW
-      uses: egor-tensin/setup-mingw@v2
-      with:
-        platform: x64
+    - name: Install MinGW with Chocolatey
+      run: choco install mingw -y
+
+    - name: Add MinGW to PATH
+      run: echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
     - name: Build executable
       run: |
+        g++ --version
         g++ -std=c++17 -static *.cpp -o cerberus.exe
         dir
 
     - name: Upload executable
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: cerberus-exe
         path: cerberus.exe
