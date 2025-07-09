@@ -1,0 +1,31 @@
+name: Build Cerberus Scanner
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          install: mingw-w64-x86_64-gcc
+
+      - name: Build executable
+        shell: msys2 {0}
+        run: |
+          g++ -std=c++17 -static cerberus.cpp -o cerberus.exe
+          ls -lah
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: cerberus-exe
+          path: cerberus.exe
