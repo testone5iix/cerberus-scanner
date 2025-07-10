@@ -81,6 +81,8 @@
 6.  قم بفتح طلب سحب (Pull Request) إلى الفرع الرئيسي للمشروع الأصلي، مع تقديم وصف مفصل للتغييرات التي قمت بها وأهميتها.
 
 ---
+[فتح Issue](https://github.com/testone5iix/cerberus-scanner/issues/new)
+
 
 ## إخلاء المسؤولية
 
