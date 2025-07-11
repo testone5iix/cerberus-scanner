@@ -1,14 +1,15 @@
-name: Build Cerberus Scanner
+name: build-windows
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-windows:
     runs-on: windows-latest
+
     steps:
     - name: Checkout source code
       uses: actions/checkout@v3
@@ -24,7 +25,7 @@ jobs:
         g++ cerberus.cpp -o cerberus.exe -std=c++17 -lpsapi -lwininet -lws2_32
 
     - name: Upload built EXE
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: cerberus-exe
         path: cerberus.exe
