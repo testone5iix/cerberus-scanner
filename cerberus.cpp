@@ -11,7 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <DbgHelp.h>
 #include <iphlpapi.h>
 #include <winhttp.h>
