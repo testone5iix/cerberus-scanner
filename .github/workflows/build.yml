@@ -2,30 +2,29 @@ name: Build Cerberus Scanner
 
 on:
   push:
-    branches: [ "main" ]
-  workflow_dispatch:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout source code
+      uses: actions/checkout@v3
 
-      - name: Setup MSYS2
-        uses: msys2/setup-msys2@v2
-        with:
-          install: mingw-w64-x86_64-gcc mingw-w64-x86_64-nlohmann-json
+    - name: Install MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        version: 12.2.0
+        platform: x64
 
-      - name: Build executable
-        shell: msys2 {0}
-        run: |
-          g++ -std=c++17 -static cerberus.cpp -o cerberus.exe
-          ls -lah
+    - name: Compile C++ project
+      run: |
+        g++ cerberus.cpp -o cerberus.exe -std=c++17 -lpsapi -lwininet -lws2_32
 
-      - name: Upload executable
-        uses: actions/upload-artifact@v4
-        with:
-          name: cerberus-exe
-          path: cerberus.exe
+    - name: Upload built EXE
+      uses: actions/upload-artifact@v3
+      with:
+        name: cerberus-exe
+        path: cerberus.exe
