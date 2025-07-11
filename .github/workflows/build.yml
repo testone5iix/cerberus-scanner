@@ -1,10 +1,10 @@
-name: build-windows
+name: Build Windows EXE
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build-windows:
@@ -17,15 +17,14 @@ jobs:
     - name: Install MinGW
       uses: egor-tensin/setup-mingw@v2
       with:
-        version: 12.2.0
         platform: x64
 
     - name: Compile C++ project
       run: |
-        g++ cerberus.cpp -o cerberus.exe -std=c++17 -lpsapi -lwininet -lws2_32
-
+        g++ cerberus.cpp -o cerberus.exe -std=c++17 -lpsapi -lwininet -lws2_32 -I.
+    
     - name: Upload built EXE
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: cerberus-exe
         path: cerberus.exe
