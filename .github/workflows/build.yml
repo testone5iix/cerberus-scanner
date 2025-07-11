@@ -24,7 +24,7 @@ jobs:
         g++ cerberus.cpp -o cerberus.exe -std=c++17 -lpsapi -lwininet -lws2_32
 
     - name: Upload built EXE
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: cerberus-exe
         path: cerberus.exe
